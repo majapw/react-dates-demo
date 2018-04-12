@@ -20,6 +20,8 @@ class App extends Component {
     return (
       <div className="App">
         <DateRangePicker
+          startDateId="startDate"
+          endDateId="endDate"
           startDate={this.state.startDate}
           endDate={this.state.endDate}
           onDatesChange={({ startDate, endDate }) => { this.setState({ startDate, endDate })}}
