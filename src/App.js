@@ -1,12 +1,30 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
 
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
+import { withStyles } from 'react-with-styles';
 
-import { DateRangePicker } from 'react-dates';
+// import BaseClass from 'react-dates/lib/utils/baseClass';
+import shallowCompare from 'react-addons-shallow-compare';
 
-class App extends Component {
+class UnstyledFoo extends (React.PureComponent || React.Component) {
+  componentDidMount() {
+    console.log('Foo:componentDidMount!');
+  }
+
+  [!React.PureComponent && 'shouldComponentUpdate'](nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
+  }
+
+  render() {
+    return <div>This is a test.</div>;
+  }
+}
+
+const Foo = withStyles(() => ({}))(UnstyledFoo);
+
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,15 +37,8 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <DateRangePicker
-          startDateId="startDate"
-          endDateId="endDate"
-          startDate={this.state.startDate}
-          endDate={this.state.endDate}
-          onDatesChange={({ startDate, endDate }) => { this.setState({ startDate, endDate })}}
-          focusedInput={this.state.focusedInput}
-          onFocusChange={(focusedInput) => { this.setState({ focusedInput })}}
-        />
+        <UnstyledFoo />
+        <Foo />
       </div>
     );
   }
