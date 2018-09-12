@@ -5,11 +5,16 @@ import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import { withStyles } from 'react-with-styles';
 
-import BaseClass from 'react-dates/lib/utils/baseClass';
+// import BaseClass from 'react-dates/lib/utils/baseClass';
+import shallowCompare from 'react-addons-shallow-compare';
 
-class UnstyledFoo extends BaseClass {
+class UnstyledFoo extends (React.PureComponent || React.Component) {
   componentDidMount() {
     console.log('Foo:componentDidMount!');
+  }
+
+  [!React.PureComponent && 'shouldComponentUpdate'](nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
   }
 
   render() {
